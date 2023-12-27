@@ -16,7 +16,7 @@ export interface IFood extends Document {
 }
 
 // FoodItem schema definition
-const foodItemSchema = new Schema({
+const FoodItemSchema = new Schema({
   code_kftc: {
     type: String,
     required: true,
@@ -64,5 +64,7 @@ const foodItemSchema = new Schema({
 });
 
 // Food model definition and export
-export const Food: Model<IFood> =
-  models.Food || model<IFood>("FoodItem", foodItemSchema);
+const FoodItem: Model<IFood> =
+  models.Food || model<IFood>("FoodItem", FoodItemSchema);
+
+export default FoodItem;

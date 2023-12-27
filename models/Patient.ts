@@ -5,6 +5,8 @@ const patientSchema = new Schema({
   last_name: { type: String, required: true },
   email_address: { type: String, required: true },
   age: { type: Number, required: true },
+  height: { type: String, required: true },
+  activitylevel: { type: DOMStringList, required: true },
   gender: { type: String, required: true },
   password: { type: String, required: true },
   phone_number: { type: String, required: true },
