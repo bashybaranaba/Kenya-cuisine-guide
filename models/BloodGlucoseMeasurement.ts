@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Patient from "./Patient";
+import Patient from "./User";
 const { ObjectId } = mongoose.Schema.Types;
 
 export interface BloodGlucoseMeasurement {

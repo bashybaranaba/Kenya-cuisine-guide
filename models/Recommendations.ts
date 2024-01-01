@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Patient from "./Patient";
+import Patient from "./User";
 import FoodItem from "./FoodItem";
 const { ObjectId } = mongoose.Schema.Types;
 
