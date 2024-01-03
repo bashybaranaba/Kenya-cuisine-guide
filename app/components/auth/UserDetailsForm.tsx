@@ -47,7 +47,7 @@ export const UserDetailsForm = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await axios.get("/api/user/details", {
+          const response = await axios.get("/api/patients/details", {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUserData(response.data);
@@ -62,7 +62,21 @@ export const UserDetailsForm = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    // Handle form submission
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.put(
+          "/api/patients",
+          { ...userData },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   const handleChange = (event: any) => {

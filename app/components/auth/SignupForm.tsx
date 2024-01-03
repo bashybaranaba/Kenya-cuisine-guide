@@ -155,10 +155,10 @@ export const SignupForm = () => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: "10px", textTransform: "none" }}
               fullWidth
             >
-              Submit
+              Sign Up
             </Button>
           </Grid>
         </Grid>

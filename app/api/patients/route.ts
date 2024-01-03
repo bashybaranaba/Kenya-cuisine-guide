@@ -3,7 +3,7 @@ import User from "../../../models/User";
 import dbConnect from "../../../lib/dbConnect";
 import jwt from "jsonwebtoken";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
   await dbConnect();
   const token = request.headers.get("Authorization")?.split(" ")[1];
 

@@ -1,4 +1,4 @@
-import { Document, Model, model, models, Schema } from "mongoose";
+import mongoose from "mongoose";
 
 //interface definition for the Food document
 export interface IFood extends Document {
@@ -11,12 +11,18 @@ export interface IFood extends Document {
   FIBTG: number;
   FATCE: number;
   GI: number;
+  CHOLESTROL: number;
+  P: number;
+  EDIBLE: number;
+  ASH: number;
+  WATER: number;
+  ENERGY: number;
   longitude: number;
   latitude: number;
 }
 
 // FoodItem schema definition
-const FoodItemSchema = new Schema({
+const FoodItemSchema = new mongoose.Schema({
   code_kftc: {
     type: String,
     required: true,
@@ -53,6 +59,30 @@ const FoodItemSchema = new Schema({
     type: Number,
     required: false,
   },
+  CHOLESTROL: {
+    type: Number,
+    required: false,
+  },
+  P: {
+    type: Number,
+    required: false,
+  },
+  EDIBLE: {
+    type: Number,
+    required: false,
+  },
+  ASH: {
+    type: Number,
+    required: false,
+  },
+  WATER: {
+    type: Number,
+    required: false,
+  },
+  ENERGY: {
+    type: Number,
+    required: false,
+  },
   longitude: {
     type: Number,
     required: false,
@@ -64,7 +94,8 @@ const FoodItemSchema = new Schema({
 });
 
 // Food model definition and export
-const FoodItem: Model<IFood> =
-  models.Food || model<IFood>("FoodItem", FoodItemSchema);
+
+const FoodItem =
+  mongoose.models.FoodItem || mongoose.model("FoodItem", FoodItemSchema);
 
 export default FoodItem;

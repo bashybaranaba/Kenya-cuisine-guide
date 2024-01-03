@@ -14,11 +14,11 @@ export function calculate_daily_caloric_needs(
   }
 
   const activity_factors: { [key: string]: number } = {
-    sedentary: 1.2,
-    "lightly active": 1.375,
-    "moderately active": 1.55,
-    "very active": 1.725,
-    "extra active": 1.9,
+    Sedentary: 1.2,
+    "Lightly active": 1.375,
+    "Moderately active": 1.55,
+    "Very active": 1.725,
+    "Extra active": 1.9,
   };
 
   return bmr * (activity_factors[activity_level] || 1.2);

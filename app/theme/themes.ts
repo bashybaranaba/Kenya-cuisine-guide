@@ -1,8 +1,8 @@
 "use client";
 import { createTheme } from "@mui/material/styles";
-import { DM_Sans } from "next/font/google";
+import { Mulish } from "next/font/google";
 
-export const dmSans = DM_Sans({
+export const dmSans = Mulish({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -12,7 +12,7 @@ export const dmSans = DM_Sans({
 export const mainTheme = createTheme({
   palette: {
     primary: {
-      main: "#43a047",
+      main: "#00838f",
     },
     secondary: {
       main: "#fff",

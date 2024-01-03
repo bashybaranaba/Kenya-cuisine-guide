@@ -26,6 +26,7 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import DinnerDiningOutlinedIcon from "@mui/icons-material/DinnerDiningOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
+import Image from "next/image";
 
 import { DrawerHeader } from "./DrawerHeader";
 
@@ -138,16 +139,20 @@ export default function AppNavBar() {
           >
             <MenuIcon />
           </IconButton>
+          <Box sx={{ mr: 2 }} />
+          <Image
+            src="/logo.png"
+            alt="Picture of the author"
+            width={48}
+            height={48}
+          />
           <Typography
-            variant="h5"
-            noWrap
+            variant="h6"
             component="div"
-            sx={{ fontWeight: 600, color: "#263238" }}
+            sx={{ flexGrow: 1, ml: 2, fontWeight: 600 }}
           >
             Kenya Cuisine Guide
-            <DinnerDiningOutlinedIcon color="primary" />
           </Typography>
-          <Box sx={{ flexGrow: 1 }} />
           <Button
             variant="outlined"
             sx={{ textTransform: "none", borderRadius: 1, width: 150 }}
@@ -156,7 +161,7 @@ export default function AppNavBar() {
               loadingAuth ? (
                 <CircularProgress size={20} />
               ) : (
-                "Sign in"
+                "Sign out"
               )
             ) : (
               "Sign out"
@@ -182,7 +187,7 @@ export default function AppNavBar() {
             <ListItem
               key={text}
               component={Link}
-              href={index % 2 === 0 ? "/" : "/diary"}
+              href={index % 2 === 0 ? "/home" : "/diary"}
               disablePadding
               sx={{
                 display: "block",

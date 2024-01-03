@@ -1,10 +1,15 @@
+"use client";
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
+import { Grid } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -14,6 +19,8 @@ export const LoginForm = () => {
         // Store token and user details in local storage
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
+        // Redirect to home page
+        router.push("/home");
       }
     } catch (error) {
       console.error(error);
@@ -22,22 +29,38 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <TextField
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <TextField
-        label="Password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <Button type="submit" variant="contained" color="primary">
-        Login
-      </Button>
+      <Grid container spacing={2} sx={{ p: 6 }}>
+        <Grid item xs={12} lg={12}>
+          <TextField
+            required
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} lg={12}>
+          <TextField
+            required
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ textTransform: "none" }}
+          >
+            Login
+          </Button>
+        </Grid>
+      </Grid>
     </form>
   );
 };

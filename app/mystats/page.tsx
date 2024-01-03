@@ -10,6 +10,7 @@ import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOu
 import ScaleOutlinedIcon from "@mui/icons-material/ScaleOutlined";
 import BloodtypeOutlinedIcon from "@mui/icons-material/BloodtypeOutlined";
 import GetRecommendations from "../components/recommendations/GetRecommendations";
+import { StatChart } from "../components/stats/StatChart";
 
 export default function MyStats() {
   return (
@@ -25,8 +26,10 @@ export default function MyStats() {
           <Typography
             variant="h5"
             component="div"
-            sx={{ fontWeight: 600 }}
-          ></Typography>
+            sx={{ fontWeight: 600, mb: 4 }}
+          >
+            My Stats
+          </Typography>
           <Grid container>
             <Grid item xs={12} md={6}>
               <Grid container>
@@ -65,6 +68,9 @@ export default function MyStats() {
                   spacing={1}
                 />
               </Grid>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <StatChart />
             </Grid>
           </Grid>
         </Box>

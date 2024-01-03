@@ -27,15 +27,21 @@ export async function POST(request: Request) {
   // Generate JWT
   const token = jwt.sign(
     { userId: user._id },
-    process.env.JWT_SECRET, // Ensure you have a JWT_SECRET in your .env
-    { expiresIn: "1h" }
+    process.env.JWT_SECRET || "JWT_SECRET", // Ensure you have a JWT_SECRET in your .env
+    { expiresIn: "24h" }
   );
 
+  console.log(user);
   return new NextResponse(
     JSON.stringify({
       message: "Login successful",
       token,
-      user: { email: user.email, name: user.name },
+      user: {
+        id: user._id,
+        email: user.email,
+        fists_name: user.first_name,
+        last_name: user.last_name,
+      },
     }),
     { status: 200 }
   );
