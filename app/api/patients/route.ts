@@ -35,6 +35,7 @@ export async function PUT(request: Request) {
     blood_sugar,
     blood_pressure,
     cholesterol,
+    heart_rate,
     medications,
     medical_conditions,
   }: any = await request.json();
@@ -55,6 +56,7 @@ export async function PUT(request: Request) {
       blood_sugar,
       blood_pressure,
       cholesterol,
+      heart_rate,
       medications,
       medical_conditions,
     });

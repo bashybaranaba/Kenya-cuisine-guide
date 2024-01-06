@@ -9,12 +9,13 @@ interface Props {
   bgcolor: string;
   gridsizes?: number;
   spacing?: number;
+  unit?: string;
 }
 
 export default function StatBox(props: Props) {
   //const router = useRouter();
 
-  const { text, icon, value, bgcolor, gridsizes, spacing } = props;
+  const { text, icon, value, bgcolor, gridsizes, spacing, unit } = props;
 
   return (
     <Grid item xs={gridsizes || 12} md={gridsizes || 4}>
@@ -45,10 +46,17 @@ export default function StatBox(props: Props) {
               {text}
             </Typography>
           </Box>
-
-          <Typography variant="h3" sx={{ color: "#1a237", fontWeight: 700 }}>
-            {value}
-          </Typography>
+          <Box sx={{ display: "flex" }}>
+            <Typography variant="h3" sx={{ color: "#1a237", fontWeight: 700 }}>
+              {value}
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{ color: "#1a237", fontWeight: 700, ml: 1 }}
+            >
+              {unit}
+            </Typography>
+          </Box>
           <UpdateStat />
         </Box>
       </Box>

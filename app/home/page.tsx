@@ -8,7 +8,7 @@ import MultilineChartOutlinedIcon from "@mui/icons-material/MultilineChartOutlin
 import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
 import ScaleOutlinedIcon from "@mui/icons-material/ScaleOutlined";
 import BloodtypeOutlinedIcon from "@mui/icons-material/BloodtypeOutlined";
-import GetRecommendations from "../components/recommendations/GetRecommendations";
+import HeightIcon from "@mui/icons-material/Height";
 import { MealPlanDisplay } from "../components/recommendations/MealPlansDisplay";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -44,15 +44,21 @@ export default function Home() {
             p: 8,
           }}
         >
-          <Typography variant="h5" component="div" sx={{ fontWeight: 600 }}>
-            Today
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{ fontWeight: 600, mt: -3, mb: 2 }}
+          >
+            Welcome {(user as any)?.first_name}!
           </Typography>
+
           <Grid container>
             <StatBox
               text="Blood glucose"
               icon={<BloodtypeOutlinedIcon sx={{ fontSize: 24 }} />}
               value={(user as any)?.blood_sugar}
               bgcolor="#e3f2fd"
+              unit={"mg/dl"}
             />
 
             <StatBox
@@ -60,13 +66,15 @@ export default function Home() {
               icon={<ScaleOutlinedIcon sx={{ fontSize: 24 }} />}
               value={(user as any)?.weight}
               bgcolor="#c5cae9"
+              unit={"kg"}
             />
 
             <StatBox
-              text="Blood pressure"
-              icon={<MultilineChartOutlinedIcon sx={{ fontSize: 24 }} />}
-              value={(user as any)?.blood_pressure}
+              text="Height"
+              icon={<HeightIcon sx={{ fontSize: 24 }} />}
+              value={(user as any)?.height}
               bgcolor="#dcedc8"
+              unit={"cm"}
             />
           </Grid>
 

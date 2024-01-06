@@ -7,12 +7,12 @@ export function StatChart() {
       xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
       series={[
         {
-          data: [2, 5.5, 2, 8.5, 1.5, 5],
+          data: [66, 60.5, 72, 90.5, 71.5, 75],
           area: true,
         },
       ]}
-      width={600}
-      height={350}
+      width={650}
+      height={430}
     />
   );
 }

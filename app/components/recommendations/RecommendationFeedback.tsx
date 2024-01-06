@@ -19,6 +19,7 @@ import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+import CardMedia from "@mui/material/CardMedia";
 
 const StyledRating = styled(Rating)(({ theme }) => ({
   "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
@@ -59,15 +60,46 @@ function IconContainer(props: IconContainerProps) {
   return <span {...other}>{customIcons[value].icon}</span>;
 }
 
-export function RecommendationFeedback({ foodDetails, recommendationId }: any) {
+export function RecommendationFeedback({
+  foodDetails,
+  recommendationId,
+  userId,
+}: any) {
   const [open, setOpen] = React.useState(false);
+  const [feedback, setFeedback] = React.useState("");
+  const [rating, setRating] = React.useState(3);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleSubmit = () => {
-    setOpen(false);
+  const handleSubmit = async () => {
+    const feedbackData = {
+      recommendation_id: recommendationId,
+      text_review: feedback,
+      rating: rating,
+    };
+    console.log(feedbackData);
+
+    try {
+      const response = await fetch("/api/recommendations/feedback", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(feedbackData),
+      });
+
+      const data = await response.json();
+      if (response.status === 200) {
+        console.log(data.message);
+        setOpen(false);
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    }
   };
 
   const handleClose = () => {
@@ -82,11 +114,14 @@ export function RecommendationFeedback({ foodDetails, recommendationId }: any) {
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
         <DialogTitle>{foodDetails.english_name}</DialogTitle>
         <DialogContent>
-          <Grid container>
+          <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <DialogContentText>
-                <img
-                  src={`https://www.google.com/search?q=${foodDetails.english_name}&tbm=isch`}
+                <CardMedia
+                  component="img"
+                  height="450"
+                  image={"/brownbread.webp"}
+                  sx={{ borderRadius: 6 }}
                   alt="food"
                 />
               </DialogContentText>
@@ -100,23 +135,23 @@ export function RecommendationFeedback({ foodDetails, recommendationId }: any) {
                 </Typography>
                 <DialogContentText>
                   <b>Calories:</b>
-                  {" " + foodDetails.ENERGY}
+                  {" " + foodDetails.ENERGY + " kcal"}
                   <br />
                   <b>Carbohydrates:</b>
-                  {" " + foodDetails.CHOAVLDF}
+                  {" " + foodDetails.CHOAVLDF + " g"}
                   <br />
                   <b>Protein:</b>
-                  {" " + foodDetails.PROTCNT}
+                  {" " + foodDetails.PROTCNT + " g"}
                   <br />
                   <b>Fat:</b>
-                  {" " + foodDetails.FATCE}
+                  {" " + foodDetails.FATCE + " g"}
 
                   <br />
                   <b>Fiber:</b>
-                  {" " + foodDetails.FIBTG}
+                  {" " + foodDetails.FIBTG + " g"}
                   <br />
                   <b>P:</b>
-                  {" " + foodDetails.P}
+                  {" " + foodDetails.P + " mg"}
                 </DialogContentText>
               </Box>
 
@@ -130,15 +165,21 @@ export function RecommendationFeedback({ foodDetails, recommendationId }: any) {
                   fullWidth
                   multiline
                   rows={2}
+                  onChange={(event) => setFeedback(event.target.value)}
                 />
                 <Box sx={{ display: "flex" }}>
                   <StyledRating
                     name="highlight-selected-only"
-                    defaultValue={3}
+                    defaultValue={rating}
                     IconContainerComponent={IconContainer}
                     getLabelText={(value: number) => customIcons[value].label}
                     highlightSelectedOnly
                     sx={{ mt: 1 }}
+                    onChange={(event) =>
+                      setRating(
+                        Number((event.target as HTMLInputElement).value)
+                      )
+                    }
                   />
                   <Box sx={{ mb: 2, flexGrow: 1 }} />
                   <Button

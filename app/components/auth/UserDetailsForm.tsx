@@ -9,6 +9,7 @@ import {
   Select,
   MenuItem,
   Chip,
+  Grid,
   OutlinedInput,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
@@ -27,6 +28,8 @@ const activityLevels = [
 ];
 export const UserDetailsForm = () => {
   const [userData, setUserData] = useState({
+    first_name: "",
+    last_name: "",
     age: "",
     height: "",
     activitylevel: "",
@@ -37,6 +40,7 @@ export const UserDetailsForm = () => {
     blood_sugar: "",
     blood_pressure: "",
     cholesterol: "",
+    heart_rate: "",
     medications: [],
     medical_conditions: [],
   });
@@ -93,126 +97,193 @@ export const UserDetailsForm = () => {
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        maxWidth: 600,
+        maxWidth: 1000,
         m: "auto",
-        p: 3,
+        p: 4,
+        backgroundColor: "#e8f5e9",
+        borderRadius: 6,
       }}
     >
-      <TextField
-        name="height"
-        label="Height"
-        value={userData.height}
-        onChange={handleChange}
-        fullWidth
-      />
-      <FormControl fullWidth>
-        <InputLabel>Activity Level</InputLabel>
-        <Select
-          name="activitylevel"
-          value={userData.activitylevel}
-          label="Activity Level"
-          onChange={handleChange}
-        >
-          {activityLevels.map((level) => (
-            <MenuItem key={level} value={level}>
-              {level}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel>Gender</InputLabel>
-        <Select
-          name="gender"
-          value={userData.gender}
-          label="Gender"
-          onChange={handleChange}
-        >
-          <MenuItem value="male">Male</MenuItem>
-          <MenuItem value="female">Female</MenuItem>
-          <MenuItem value="other">Other</MenuItem>
-        </Select>
-      </FormControl>
-      <TextField
-        name="phone_number"
-        label="Phone Number"
-        value={userData.phone_number}
-        onChange={handleChange}
-        fullWidth
-      />
-      <TextField
-        name="weight"
-        label="Weight"
-        value={userData.weight}
-        onChange={handleChange}
-        fullWidth
-        type="number"
-      />
-      <FormControl fullWidth>
-        <InputLabel>Allergies</InputLabel>
-        <Select
-          name="allergies"
-          multiple
-          value={userData.allergies}
-          onChange={(event) => handleArrayChange(event, "allergies")}
-          input={<OutlinedInput label="Allergies" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <TextField
+            name="first_name"
+            label="First Name"
+            value={userData.first_name}
+            onChange={handleChange}
+            fullWidth
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField
+            name="last_name"
+            label="Last Name"
+            value={userData.last_name}
+            onChange={handleChange}
+            fullWidth
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <FormControl fullWidth>
+            <InputLabel>Gender</InputLabel>
+            <Select
+              name="gender"
+              value={userData.gender}
+              label="Gender"
+              onChange={handleChange}
+              sx={{ backgroundColor: "#fff" }}
+            >
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <TextField
+            name="height"
+            label="Height"
+            value={userData.height}
+            onChange={handleChange}
+            fullWidth
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TextField
+            name="weight"
+            label="Weight"
+            value={userData.weight}
+            onChange={handleChange}
+            fullWidth
+            type="number"
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <FormControl fullWidth>
+            <InputLabel>Activity Level</InputLabel>
+            <Select
+              name="activitylevel"
+              value={userData.activitylevel}
+              label="Activity Level"
+              onChange={handleChange}
+              sx={{ backgroundColor: "#fff" }}
+            >
+              {activityLevels.map((level) => (
+                <MenuItem key={level} value={level}>
+                  {level}
+                </MenuItem>
               ))}
-            </Box>
-          )}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12} lg={4}>
+          <TextField
+            name="blood_sugar"
+            label="Blood Sugar"
+            value={userData.blood_sugar}
+            onChange={handleChange}
+            fullWidth
+            type="number"
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <TextField
+            name="blood_pressure"
+            label="Blood Pressure (Systolic)"
+            value={userData.blood_pressure}
+            onChange={handleChange}
+            fullWidth
+            type="number"
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <TextField
+            name="blood_pressure"
+            label="Blood Pressure (Diastolic)"
+            value={userData.cholesterol}
+            onChange={handleChange}
+            fullWidth
+            type="number"
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+
+        <Grid item xs={12} lg={12}>
+          <TextField
+            name="heart_rate"
+            label="Heart Rate"
+            value={userData.cholesterol}
+            onChange={handleChange}
+            fullWidth
+            type="number"
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+
+        <Grid item xs={12} lg={6}>
+          <FormControl fullWidth>
+            <InputLabel>Medications</InputLabel>
+            <Select
+              name="medications"
+              multiple
+              value={userData.medications}
+              onChange={(event) => handleArrayChange(event, "medications")}
+              input={<OutlinedInput label="Medications" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              sx={{ backgroundColor: "#fff" }}
+            >
+              {/* Map through medication options */}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12} lg={6}>
+          <FormControl fullWidth>
+            <InputLabel>Allergies</InputLabel>
+            <Select
+              name="allergies"
+              multiple
+              value={userData.allergies}
+              onChange={(event) => handleArrayChange(event, "allergies")}
+              input={<OutlinedInput label="Allergies" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              sx={{ backgroundColor: "#fff" }}
+            >
+              {/* Map through allergy options */}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Box sx={{ flexGrow: "1" }} />
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          sx={{ m: 2, textTransform: "none" }}
         >
-          {/* Map through allergy options */}
-        </Select>
-      </FormControl>
-      <TextField
-        name="blood_sugar"
-        label="Blood Sugar"
-        value={userData.blood_sugar}
-        onChange={handleChange}
-        fullWidth
-        type="number"
-      />
-      <TextField
-        name="blood_pressure"
-        label="Blood Pressure"
-        value={userData.blood_pressure}
-        onChange={handleChange}
-        fullWidth
-        type="number"
-      />
-      <TextField
-        name="cholesterol"
-        label="Cholesterol"
-        value={userData.cholesterol}
-        onChange={handleChange}
-        fullWidth
-        type="number"
-      />
-      <FormControl fullWidth>
-        <InputLabel>Medications</InputLabel>
-        <Select
-          name="medications"
-          multiple
-          value={userData.medications}
-          onChange={(event) => handleArrayChange(event, "medications")}
-          input={<OutlinedInput label="Medications" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
-            </Box>
-          )}
-        >
-          {/* Map through medication options */}
-        </Select>
-      </FormControl>
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Update Details
-      </Button>
+          Update Details
+        </Button>
+      </Grid>
     </Box>
   );
 };

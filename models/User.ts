@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   blood_sugar: { type: Number, required: false },
   blood_pressure: { type: Number, required: false },
   cholesterol: { type: Number, required: false },
+  heart_rate: { type: Number, required: false },
   medications: { type: Array, required: false },
   medical_conditions: { type: Array, required: false },
 });

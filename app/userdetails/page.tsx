@@ -1,12 +1,25 @@
+"use client";
 import React from "react";
 import { UserDetailsForm } from "../components/auth/UserDetailsForm";
+import Box from "@mui/material/Box";
+import AppNavBar from "../components/layout/AppNavBar";
+import { DrawerHeader } from "../components/layout/DrawerHeader";
 
 const SignupPage = () => {
   return (
-    <div>
-      <h1>User Details</h1>
-      <UserDetailsForm />
-    </div>
+    <Box sx={{ display: "flex" }}>
+      <AppNavBar />
+      <Box component="main" sx={{ flexGrow: 1 }}>
+        <DrawerHeader />
+        <Box
+          sx={{
+            p: 8,
+          }}
+        >
+          <UserDetailsForm />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
