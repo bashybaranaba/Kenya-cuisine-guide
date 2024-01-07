@@ -17,6 +17,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { useRouter } from "next/navigation";
 
 export const MealPlanDisplay = ({ userId }: any) => {
   const [mealPlan, setMealPlan] = useState(null);
@@ -26,24 +27,29 @@ export const MealPlanDisplay = ({ userId }: any) => {
     setRecommendations(event.target.value as string);
   };
 
+  const router = useRouter();
+
   useEffect(() => {
-    const fetchMealPlan = async () => {
-      const token = localStorage.getItem("token");
-      console.log("token", token);
-
-      try {
-        const response = await axios.get(`/api/recommendations`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setMealPlan(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching meal plan:", error);
-      }
-    };
-
     fetchMealPlan();
   }, [userId]);
+
+  const fetchMealPlan = async () => {
+    const token = localStorage.getItem("token");
+    console.log("token", token);
+    //change no of recommendations TO INT
+
+    const noOfRecommendations = parseInt(recommendations);
+    try {
+      const response = await axios.get(`/api/recommendations`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { no_of_recommendations: noOfRecommendations },
+      });
+      setMealPlan(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching meal plan:", error);
+    }
+  };
 
   if (!mealPlan)
     return (
@@ -91,6 +97,7 @@ export const MealPlanDisplay = ({ userId }: any) => {
               aria-label="refresh"
               color="primary"
               sx={{ height: 42, ml: 2 }}
+              onClick={fetchMealPlan}
             >
               <RefreshOutlinedIcon />
             </Fab>

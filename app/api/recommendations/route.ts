@@ -57,7 +57,8 @@ function getNutritionalCriteriaForMeal(
 // Function to get meal recommendations
 async function getMealRecommendations(
   userId: string,
-  mealType: string
+  mealType: string,
+  noOfRecommendations: any
 ): Promise<any[]> {
   const user = await User.findById(userId);
   if (!user) {
@@ -87,7 +88,9 @@ async function getMealRecommendations(
   const excludedItems = poorlyRatedItems.map((item) => item.fooditem);
   mealCriteria._id = { $nin: excludedItems };
 
-  const recommendedItems = await FoodItem.find(mealCriteria).limit(2);
+  const recommendedItems = await FoodItem.find(mealCriteria).limit(
+    noOfRecommendations
+  );
 
   // Store recommendations in the database with an initial null rating and return food recommendations with their recommendation ids
   await dbConnect();
@@ -113,12 +116,19 @@ async function getMealRecommendations(
 }
 
 // Function to get a full day meal plan
-async function getFullDayMealPlan(userId: string): Promise<any> {
+async function getFullDayMealPlan(
+  userId: string,
+  noOfRecommendations: any
+): Promise<any> {
   const mealTypes: any = ["breakfast", "lunch", "supper", "snacks"];
   let mealPlan: any = {};
 
   for (const mealType of mealTypes) {
-    mealPlan[mealType] = await getMealRecommendations(userId, mealType);
+    mealPlan[mealType] = await getMealRecommendations(
+      userId,
+      mealType,
+      noOfRecommendations
+    );
   }
 
   return mealPlan;
@@ -127,6 +137,10 @@ async function getFullDayMealPlan(userId: string): Promise<any> {
 export async function GET(request: Request, response: NextResponse) {
   await dbConnect();
   const token = request.headers.get("Authorization")?.split(" ")[1];
+  //get no of recommendations from params
+  const { searchParams } = new URL(request.url);
+  const no_of_recommendations = searchParams.get("no_of_recommendations");
+  console.log("no_of_recommendations: ", no_of_recommendations);
 
   let userId;
   try {
@@ -141,7 +155,10 @@ export async function GET(request: Request, response: NextResponse) {
     });
   }
 
-  const mealPlan = await getFullDayMealPlan(userId as string);
+  const mealPlan = await getFullDayMealPlan(
+    userId as string,
+    no_of_recommendations
+  );
 
   return new NextResponse(JSON.stringify(mealPlan), {
     status: 200,

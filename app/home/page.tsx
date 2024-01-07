@@ -59,6 +59,8 @@ export default function Home() {
               value={(user as any)?.blood_sugar}
               bgcolor="#e3f2fd"
               unit={"mg/dl"}
+              field={"blood sugar"}
+              title={"Update your Blood sugar"}
             />
 
             <StatBox
@@ -67,6 +69,8 @@ export default function Home() {
               value={(user as any)?.weight}
               bgcolor="#c5cae9"
               unit={"kg"}
+              field={"weight"}
+              title={"Update your Weight"}
             />
 
             <StatBox
@@ -75,6 +79,8 @@ export default function Home() {
               value={(user as any)?.height}
               bgcolor="#dcedc8"
               unit={"cm"}
+              field={"height"}
+              title={"Update your Height"}
             />
           </Grid>
 

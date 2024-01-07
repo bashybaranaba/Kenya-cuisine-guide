@@ -10,12 +10,15 @@ interface Props {
   gridsizes?: number;
   spacing?: number;
   unit?: string;
+  field?: string;
+  title?: string;
 }
 
 export default function StatBox(props: Props) {
   //const router = useRouter();
 
-  const { text, icon, value, bgcolor, gridsizes, spacing, unit } = props;
+  const { text, icon, value, bgcolor, gridsizes, spacing, unit, field, title } =
+    props;
 
   return (
     <Grid item xs={gridsizes || 12} md={gridsizes || 4}>
@@ -57,7 +60,7 @@ export default function StatBox(props: Props) {
               {unit}
             </Typography>
           </Box>
-          <UpdateStat />
+          <UpdateStat text={text} field={field} title={title} />
         </Box>
       </Box>
     </Grid>

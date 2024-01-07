@@ -152,6 +152,9 @@ export function RecommendationFeedback({
                   <br />
                   <b>P:</b>
                   {" " + foodDetails.P + " mg"}
+                  <br />
+                  <b>Predicted GI:</b>
+                  {" " + foodDetails.GI == null ? "57" : foodDetails.GI}
                 </DialogContentText>
               </Box>
 

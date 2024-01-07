@@ -10,39 +10,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 
 import { Theme, useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
 
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-interface Props {
-  title: string;
-  description: string;
-  value: number;
-  bgcolor: string;
-}
-
-function getStyles(name: string, foodName: readonly string[], theme: Theme) {
-  return {
-    fontWeight:
-      foodName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
-export default function UpdateStat() {
+export default function UpdateStat({ title, text, field }: any) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -78,19 +49,17 @@ export default function UpdateStat() {
         Update
       </Button>
       <Dialog open={open} fullWidth maxWidth="md" onClose={handleClose}>
-        <DialogTitle>Add Diary Entry</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ mb: 2 }}>
-            Update your blood glucose
-          </DialogContentText>
+          <DialogContentText sx={{ mb: 2 }}>{text}</DialogContentText>
           <Grid container spacing={1}>
             <Grid item lg={12}>
               <TextField
                 autoFocus
                 margin="dense"
                 id="name"
-                label="Blood Glucose After"
-                type="email"
+                label={field}
+                type="text"
                 fullWidth
                 variant="outlined"
               />
