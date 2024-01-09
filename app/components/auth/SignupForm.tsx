@@ -6,6 +6,8 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { CircularProgress } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 import TextField from "@mui/material/TextField";
 import axios from "axios";
@@ -17,11 +19,14 @@ export const SignupForm = () => {
   const [lastName, setLastName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      //check for errors
+      setLoading(true);
       if (
         firstName.length < 2 ||
         lastName.length < 2 ||
@@ -41,11 +46,14 @@ export const SignupForm = () => {
       });
 
       console.log(response.data);
+
       if (response.data.token) {
         // Store token and user details in local storage
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
+      setLoading(false);
+      router.push("/userdetails");
     } catch (error) {
       console.error(error);
     }
@@ -158,7 +166,11 @@ export const SignupForm = () => {
               style={{ marginTop: "10px", textTransform: "none" }}
               fullWidth
             >
-              Sign Up
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Sign Up"
+              )}
             </Button>
           </Grid>
         </Grid>

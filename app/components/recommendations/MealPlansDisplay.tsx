@@ -18,10 +18,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useRouter } from "next/navigation";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const MealPlanDisplay = ({ userId }: any) => {
   const [mealPlan, setMealPlan] = useState(null);
   const [recommendations, setRecommendations] = React.useState("2");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     setRecommendations(event.target.value as string);
@@ -34,6 +36,7 @@ export const MealPlanDisplay = ({ userId }: any) => {
   }, [userId]);
 
   const fetchMealPlan = async () => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     console.log("token", token);
     //change no of recommendations TO INT
@@ -46,15 +49,17 @@ export const MealPlanDisplay = ({ userId }: any) => {
       });
       setMealPlan(response.data);
       console.log(response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching meal plan:", error);
+      setLoading(false);
     }
   };
 
   if (!mealPlan)
     return (
       <Box sx={{ padding: 2 }}>
-        <Typography variant="h5" sx={{ marginBottom: 1 }}>
+        <Typography variant="h5" sx={{ fontWeight: 600, marginBottom: 1 }}>
           Recommendations
         </Typography>
         <Typography>Loading...</Typography>
@@ -65,7 +70,7 @@ export const MealPlanDisplay = ({ userId }: any) => {
     <Box sx={{ padding: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={9} md={9}>
-          <Typography variant="h5" sx={{ marginBottom: 1 }}>
+          <Typography variant="h5" sx={{ fontWeight: 600, marginBottom: 1 }}>
             Recommendations
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: 2 }}>
@@ -99,7 +104,11 @@ export const MealPlanDisplay = ({ userId }: any) => {
               sx={{ height: 42, ml: 2 }}
               onClick={fetchMealPlan}
             >
-              <RefreshOutlinedIcon />
+              {loading ? (
+                <CircularProgress size={20} color="secondary" />
+              ) : (
+                <RefreshOutlinedIcon />
+              )}
             </Fab>
           </Box>
         </Grid>

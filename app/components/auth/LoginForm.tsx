@@ -4,16 +4,20 @@ import { TextField, Button } from "@mui/material";
 import axios from "axios";
 import { Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post("/api/auth/login", { email, password });
       if (response.data.token) {
         // Store token and user details in local storage
@@ -22,8 +26,11 @@ export const LoginForm = () => {
         // Redirect to home page
         router.push("/home");
       }
+      setLoading(false);
     } catch (error) {
+      setError(true);
       console.error(error);
+      setLoading(false);
     }
   };
 
@@ -49,6 +56,11 @@ export const LoginForm = () => {
             fullWidth
           />
         </Grid>
+        {error && (
+          <Grid item xs={12} lg={12}>
+            <p style={{ color: "red" }}>Invalid email or password</p>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Button
             type="submit"
@@ -57,7 +69,7 @@ export const LoginForm = () => {
             fullWidth
             sx={{ textTransform: "none" }}
           >
-            Login
+            {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
           </Button>
         </Grid>
       </Grid>

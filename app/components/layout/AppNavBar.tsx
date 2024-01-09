@@ -26,7 +26,9 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import DinnerDiningOutlinedIcon from "@mui/icons-material/DinnerDiningOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import axios from "axios";
 
 import { DrawerHeader } from "./DrawerHeader";
 
@@ -98,6 +100,23 @@ export default function AppNavBar() {
   const [loadingAuth, setLoadingAuth] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    setLoadingAuth(true);
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        localStorage.removeItem("token");
+        setAuthenticated(false);
+        setLoadingAuth(false);
+        router.push("/auth/login");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -156,6 +175,7 @@ export default function AppNavBar() {
           <Button
             variant="outlined"
             sx={{ textTransform: "none", borderRadius: 1, width: 150 }}
+            onClick={handleSignOut}
           >
             {!authenticated ? (
               loadingAuth ? (

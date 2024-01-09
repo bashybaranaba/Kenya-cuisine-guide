@@ -65,7 +65,13 @@ async function getMealRecommendations(
     throw new Error("User not found");
   }
 
-  const dailyCaloricNeeds = 3329;
+  const dailyCaloricNeeds = calculate_daily_caloric_needs(
+    user.height,
+    user.weight,
+    user.age,
+    user.gender,
+    user.activitylevel
+  );
 
   console.log("User: ", user);
   console.log("Daily caloric needs: ", dailyCaloricNeeds);

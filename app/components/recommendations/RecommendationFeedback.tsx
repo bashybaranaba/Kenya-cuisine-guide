@@ -20,6 +20,9 @@ import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 import CardMedia from "@mui/material/CardMedia";
+import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import Chip from "@mui/material/Chip";
 
 const StyledRating = styled(Rating)(({ theme }) => ({
   "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
@@ -68,9 +71,31 @@ export function RecommendationFeedback({
   const [open, setOpen] = React.useState(false);
   const [feedback, setFeedback] = React.useState("");
   const [rating, setRating] = React.useState(3);
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [loadingImage, setLoadingImage] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  React.useEffect(() => {
+    fetchImage();
+  }, []);
+
+  const fetchImage = async () => {
+    setLoadingImage(true);
+    const customSearcAapiKey = process.env.NEXT_PUBLIC_CUSTOM_SEARCH_API_KEY;
+    const searchEngineId = "f48a7c2c993164c34";
+    const query = `food image for ${foodDetails.english_name}`;
+
+    const response = await axios.get(
+      `https://www.googleapis.com/customsearch/v1?key=${customSearcAapiKey}&cx=${searchEngineId}&searchType=image&q=${query}&num=1`
+    );
+
+    if (response.data.items.length > 0) {
+      setImageUrl(response.data.items[0].link);
+      setLoadingImage(false);
+    }
   };
 
   const handleSubmit = async () => {
@@ -80,7 +105,6 @@ export function RecommendationFeedback({
       rating: rating,
     };
     console.log(feedbackData);
-
     try {
       const response = await fetch("/api/recommendations/feedback", {
         method: "PUT",
@@ -117,13 +141,17 @@ export function RecommendationFeedback({
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <DialogContentText>
-                <CardMedia
-                  component="img"
-                  height="450"
-                  image={"/brownbread.webp"}
-                  sx={{ borderRadius: 6 }}
-                  alt="food"
-                />
+                {loadingImage ? (
+                  <CircularProgress />
+                ) : (
+                  <CardMedia
+                    component="img"
+                    height="450"
+                    image={imageUrl}
+                    sx={{ borderRadius: 6 }}
+                    alt="food"
+                  />
+                )}
               </DialogContentText>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -135,7 +163,7 @@ export function RecommendationFeedback({
                 </Typography>
                 <DialogContentText>
                   <b>Calories:</b>
-                  {" " + foodDetails.ENERGY + " kcal"}
+                  {" " + foodDetails.ENERC + " kcal"}
                   <br />
                   <b>Carbohydrates:</b>
                   {" " + foodDetails.CHOAVLDF + " g"}
@@ -153,8 +181,18 @@ export function RecommendationFeedback({
                   <b>P:</b>
                   {" " + foodDetails.P + " mg"}
                   <br />
-                  <b>Predicted GI:</b>
-                  {" " + foodDetails.GI == null ? "57" : foodDetails.GI}
+
+                  <Chip
+                    label={
+                      foodDetails.GI > 70
+                        ? "High GI"
+                        : foodDetails.GI < 55
+                        ? "Low GI"
+                        : " Moderate GI"
+                    }
+                    variant="outlined"
+                    sx={{ mt: 2, ml: -1 }}
+                  />
                 </DialogContentText>
               </Box>
 

@@ -18,6 +18,9 @@ import HeightIcon from "@mui/icons-material/Height";
 import PhoneIcon from "@mui/icons-material/Phone";
 import CakeIcon from "@mui/icons-material/Cake";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import CircularProgress from "@mui/material/CircularProgress";
+import { set } from "mongoose";
 
 const activityLevels = [
   "Sedentary",
@@ -44,6 +47,9 @@ export const UserDetailsForm = () => {
     medications: [],
     medical_conditions: [],
   });
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     // Fetch user data from the API and set it to state
@@ -65,6 +71,7 @@ export const UserDetailsForm = () => {
   }, []);
 
   const handleSubmit = async (event: any) => {
+    setLoading(true);
     event.preventDefault();
     const token = localStorage.getItem("token");
     if (token) {
@@ -77,8 +84,11 @@ export const UserDetailsForm = () => {
           }
         );
         console.log(response);
+        router.push("/home");
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     }
   };
@@ -141,6 +151,18 @@ export const UserDetailsForm = () => {
           </FormControl>
         </Grid>
 
+        <Grid item xs={12} md={12}>
+          <TextField
+            name="age"
+            label="Age"
+            value={userData.age}
+            onChange={handleChange}
+            fullWidth
+            type="number"
+            sx={{ backgroundColor: "#fff" }}
+          />
+        </Grid>
+
         <Grid item xs={12} md={4}>
           <TextField
             name="height"
@@ -181,7 +203,7 @@ export const UserDetailsForm = () => {
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={12} lg={6}>
           <TextField
             name="blood_sugar"
             label="Blood Sugar"
@@ -192,30 +214,7 @@ export const UserDetailsForm = () => {
             sx={{ backgroundColor: "#fff" }}
           />
         </Grid>
-        <Grid item xs={12} lg={4}>
-          <TextField
-            name="blood_pressure"
-            label="Blood Pressure (Systolic)"
-            value={userData.blood_pressure}
-            onChange={handleChange}
-            fullWidth
-            type="number"
-            sx={{ backgroundColor: "#fff" }}
-          />
-        </Grid>
-        <Grid item xs={12} lg={4}>
-          <TextField
-            name="blood_pressure"
-            label="Blood Pressure (Diastolic)"
-            value={userData.cholesterol}
-            onChange={handleChange}
-            fullWidth
-            type="number"
-            sx={{ backgroundColor: "#fff" }}
-          />
-        </Grid>
-
-        <Grid item xs={12} lg={12}>
+        <Grid item xs={12} lg={6}>
           <TextField
             name="heart_rate"
             label="Heart Rate"
@@ -228,49 +227,26 @@ export const UserDetailsForm = () => {
         </Grid>
 
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth>
-            <InputLabel>Medications</InputLabel>
-            <Select
-              name="medications"
-              multiple
-              value={userData.medications}
-              onChange={(event) => handleArrayChange(event, "medications")}
-              input={<OutlinedInput label="Medications" />}
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-              sx={{ backgroundColor: "#fff" }}
-            >
-              {/* Map through medication options */}
-            </Select>
-          </FormControl>
+          <TextField
+            name="blood_pressure"
+            label="Blood Pressure (Systolic)"
+            value={userData.blood_pressure}
+            onChange={handleChange}
+            fullWidth
+            type="number"
+            sx={{ backgroundColor: "#fff" }}
+          />
         </Grid>
-
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth>
-            <InputLabel>Allergies</InputLabel>
-            <Select
-              name="allergies"
-              multiple
-              value={userData.allergies}
-              onChange={(event) => handleArrayChange(event, "allergies")}
-              input={<OutlinedInput label="Allergies" />}
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-              sx={{ backgroundColor: "#fff" }}
-            >
-              {/* Map through allergy options */}
-            </Select>
-          </FormControl>
+          <TextField
+            name="blood_pressure"
+            label="Blood Pressure (Diastolic)"
+            value={userData.cholesterol}
+            onChange={handleChange}
+            fullWidth
+            type="number"
+            sx={{ backgroundColor: "#fff" }}
+          />
         </Grid>
 
         <Box sx={{ flexGrow: "1" }} />
@@ -281,7 +257,11 @@ export const UserDetailsForm = () => {
           onClick={handleSubmit}
           sx={{ m: 2, textTransform: "none" }}
         >
-          Update Details
+          {loading ? (
+            <CircularProgress size={20} color="secondary" />
+          ) : (
+            "Update Details"
+          )}
         </Button>
       </Grid>
     </Box>
