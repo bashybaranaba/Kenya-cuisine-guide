@@ -64,8 +64,10 @@ export default function Home() {
           <Typography variant="h4" component="div" sx={{ fontWeight: 600 }}>
             A guide to healthy eating for Diabetics in Kenya
           </Typography>
-          <Typography variant="subtitle1" component="div">
-            Get personalized meal plans based on your health profile
+          <Typography variant="subtitle1" component="div" sx={{ mr: 8, mt: 2 }}>
+            Get personalized meal plans based on your health profile and local
+            Kenya cuisine recommendations to help you manage your diabetes and a
+            healthy lifestyle.
           </Typography>
           <Button
             variant="contained"
@@ -89,18 +91,6 @@ export default function Home() {
       <Grid container sx={{ p: 12 }}>
         <Grid item xs={12} lg={4} sx={{ p: 4 }}>
           <Grid sx={{ alignItems: "center", justifyContent: "center" }}>
-            <SmartToyIcon sx={{ fontSize: 50 }} color="primary" />
-            <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
-              AI Powered
-            </Typography>
-          </Grid>
-          <Typography variant="subtitle1" component="div">
-            Using the latest in AI technology, we are able to provide you with
-            the best meal plans based on your health profile
-          </Typography>
-        </Grid>
-        <Grid item xs={12} lg={4} sx={{ p: 4 }}>
-          <Grid sx={{ alignItems: "center", justifyContent: "center" }}>
             <SettingsAccessibilityIcon sx={{ fontSize: 50 }} color="primary" />
             <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
               Personalized for you
@@ -118,7 +108,20 @@ export default function Home() {
             </Typography>
           </Grid>
           <Typography variant="subtitle1" component="div">
-            Get meal plans based on local cuisine
+            Get meal plans based on local cuisine and ingredients available in
+            Kenya
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={4} sx={{ p: 4 }}>
+          <Grid sx={{ alignItems: "center", justifyContent: "center" }}>
+            <SmartToyIcon sx={{ fontSize: 50 }} color="primary" />
+            <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
+              AI Powered
+            </Typography>
+          </Grid>
+          <Typography variant="subtitle1" component="div">
+            Using the latest in AI technology, we are able to provide you with
+            tailored meal plans
           </Typography>
         </Grid>
       </Grid>

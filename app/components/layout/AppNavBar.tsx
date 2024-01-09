@@ -26,6 +26,7 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import DinnerDiningOutlinedIcon from "@mui/icons-material/DinnerDiningOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
@@ -278,7 +279,7 @@ export default function AppNavBar() {
           <ListItem
             key={1}
             component={Link}
-            href="/home"
+            href="/userdetails"
             disablePadding
             sx={{
               display: "block",
@@ -300,10 +301,10 @@ export default function AppNavBar() {
                   justifyContent: "center",
                 }}
               >
-                <HistoryOutlinedIcon />
+                <PersonOutlineOutlinedIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"My History"}
+                primary={"My Details"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
